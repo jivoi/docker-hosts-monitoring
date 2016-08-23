@@ -1,24 +1,26 @@
- influxdb:
-   image: tutum/influxdb
-   restart: always
-   expose:
-     - "8090"
-     - "8099"
-   ports:
-     - "127.0.0.1:8083:8083"
-     - "8086:8086"
-   volumes:
-     - /srv/influxdb:/data
-   environments:
-     - ADMIN_USER: telegraf
-     - INFLUXDB_INIT_PWD: P@ssw0rd
-     - PRE_CREATE_DB: telegraf
- grafana:
-   image: grafana/grafana:latest
-   restart: always
-   ports:
-     - "3000:3000"
-   volumes:
-     - /srv/grafana:/var/lib/grafana
-   environments:
-     - GF_SECURITY_ADMIN_PASSWORD: P@ssw0rd
+version: '2'
+services:
+  influxdb:
+    image: tutum/influxdb
+    restart: always
+    expose:
+      - "8090"
+      - "8099"
+    ports:
+      - "127.0.0.1:8083:8083"
+      - "8086:8086"
+    volumes:
+      - /srv/influxdb:/data
+    environment:
+      ADMIN_USER: telegraf
+      INFLUXDB_INIT_PWD: P@ssw0rd
+      PRE_CREATE_DB: telegraf
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - /srv/grafana:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: P@ssw0rd
